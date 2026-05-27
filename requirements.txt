@@ -1,5 +1,6 @@
 aiofiles
 aiohttp
+asyncio
 beautifulsoup4
 dnspython
 ffmpeg-python
@@ -9,9 +10,10 @@ heroku3
 motor
 pillow==10.0.1
 psutil
-pyrogram==2.0.106
-pytgcalls==3.0.0.dev24
+py-tgcalls==0.9.7
 pykeyboard
+#pyrogram==2.0.106
+pyrofork
 python-dotenv
 pyyaml
 requests
@@ -24,4 +26,4 @@ youtube-search
 youtube-search-python
 py_yt_search
 pymongo==4.6.3
-httpx[http2]==0.27.2
+httpx[http2]>=0.28.1
