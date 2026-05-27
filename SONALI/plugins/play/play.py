@@ -331,10 +331,14 @@ async def play_commnd(
             details, track_id = await YouTube.track(query)
         except:
             return await mystic.edit_text(_["play_3"])
+
+        if not details:
+            return await mystic.edit_text(_["play_3"])
+
         streamtype = "youtube"
     if str(playmode) == "Direct":
         if not plist_type:
-            if details["duration_min"]:
+            if details and details.get("duration_min"):
                 duration_sec = time_to_seconds(details["duration_min"])
                 if duration_sec > config.DURATION_LIMIT:
                     return await mystic.edit_text(
@@ -460,7 +464,7 @@ async def play_music(client, CallbackQuery, _):
         details, track_id = await YouTube.track(vidid, True)
     except:
         return await mystic.edit_text(_["play_3"])
-    if details["duration_min"]:
+    if details and details.get("duration_min"):
         duration_sec = time_to_seconds(details["duration_min"])
         if duration_sec > config.DURATION_LIMIT:
             return await mystic.edit_text(
