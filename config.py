@@ -55,7 +55,7 @@ votemode = {}
 autoclean = []
 confirmer = {}
 
-START_IMG_URL = getenv("START_IMG_URL", "https://files.catbox.moe/fu6jk3.jpg")
+START_IMG_URL = getenv("START_IMG_URL", "https://silabotov.ru/img/8f2262f1-34dc-42bb-b1df-91f751cbf990.jpg")
 PING_IMG_URL = getenv("PING_IMG_URL", "https://files.catbox.moe/26nzoq.jpg")
 PLAYLIST_IMG_URL = "https://files.catbox.moe/f2s4ws.jpg"
 STATS_IMG_URL = "https://files.catbox.moe/z0gh23.jpg"
@@ -66,7 +66,7 @@ SOUNCLOUD_IMG_URL = "https://telegra.ph/file/d30d11c4365c025c25e3e.jpg"
 YOUTUBE_IMG_URL = "https://files.catbox.moe/2y5o3g.jpg"
 SPOTIFY_ARTIST_IMG_URL = "https://files.catbox.moe/2y5o3g.jpg"
 SPOTIFY_ALBUM_IMG_URL = "https://files.catbox.moe/2y5o3g.jpg"
-SPOTIFY_PLAYLIST_IMG_URL = "https://telegra.ph/file/d30d11c4365c025c25e3e.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://silabotov.ru/img/8f2262f1-34dc-42bb-b1df-91f751cbf990.jpg"
 
 
 def time_to_seconds(time):
