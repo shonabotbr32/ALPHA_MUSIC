@@ -464,7 +464,7 @@ class YouTubeAPI:
 
                 session = create_session()
 
-                search_url = f"{YTPROXY}/ytsearch"
+                search_url = f"{YTPROXY}/api/search"
 
                 params = {
                     "query": link
