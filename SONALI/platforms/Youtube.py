@@ -1,4 +1,4 @@
-# SECURE YOUTUBE API FILE
+# SECURE YOUTUBE API FILE BY HARSH CHAURASIYA 
 # Fully patched against command injection
 # No shell=True
 # No subprocess_shell
@@ -450,30 +450,166 @@ class YouTubeAPI:
         videoid: Union[bool, str] = None,
     ):
 
-        if videoid:
-            link = self.base + link
+        try:
 
-        if not validate_youtube_url(link):
-            return None, None
+            if videoid:
+                vid_id = link
 
-        results = VideosSearch(
-            link,
-            limit=1,
-        )
+            else:
 
-        for result in (await results.next())["result"]:
+                headers = {
+                    "x-api-key": str(YT_API_KEY),
+                    "User-Agent": "Mozilla/5.0",
+                }
 
-            track_details = {
-                "title": result["title"],
-                "link": result["link"],
-                "vidid": result["id"],
-                "duration_min": result["duration"],
-                "thumb": result["thumbnails"][0]["url"],
+                session = create_session()
+
+                search_url = f"{YTPROXY}/search"
+
+                params = {
+                    "query": link
+                }
+
+                response = session.get(
+                    search_url,
+                    headers=headers,
+                    params=params,
+                    timeout=60,
+                )
+
+                try:
+                    data = response.json()
+                except Exception:
+                    logger.error(
+                        f"Invalid JSON Response: {response.text}"
+                    )
+                    return None, None
+
+                session.close()
+
+                if data.get("status") != "success":
+
+                    logger.error(
+                        f"Search Failed: {data}"
+                    )
+
+                    return None, None
+
+                results = data.get("result")
+
+                if not results:
+
+                    logger.error(
+                        "No Search Results Found"
+                    )
+
+                    return None, None
+
+                first = results[0]
+
+                vid_id = (
+                    first.get("videoId")
+                    or first.get("id")
+                )
+
+                if not vid_id:
+
+                    logger.error(
+                        "Video ID Missing"
+                    )
+
+                    return None, None
+
+            headers = {
+                "x-api-key": str(YT_API_KEY),
+                "User-Agent": "Mozilla/5.0",
             }
 
-            return track_details, result["id"]
+            session = create_session()
 
-    # -------------------- FORMATS -------------------- #
+            info_url = f"{YTPROXY}/info/{vid_id}"
+
+            response = session.get(
+                info_url,
+                headers=headers,
+                timeout=60,
+            )
+
+            try:
+                data = response.json()
+            except Exception:
+                logger.error(
+                    f"Invalid Info JSON: {response.text}"
+                )
+                return None, None
+
+            session.close()
+
+            if data.get("status") != "success":
+
+                logger.error(
+                    f"Info Failed: {data}"
+                )
+
+                return None, None
+
+            result = data.get("result")
+
+            if not result:
+
+                logger.error(
+                    "Video Result Missing"
+                )
+
+                return None, None
+
+            title = (
+                result.get("title")
+                or "Unknown Title"
+            )
+
+            duration = (
+                result.get("duration")
+                or "0:00"
+            )
+
+            thumbnail = (
+                result.get("thumbnail")
+                or result.get("thumb")
+                or result.get("image")
+                or "https://i.imgur.com/4LwPLai.png"
+            )
+
+            track_details = {
+
+                "title": title,
+
+                "link":
+                    f"https://youtube.com/watch?v={vid_id}",
+
+                "vidid": vid_id,
+
+                "duration_min": duration,
+
+                "thumb": thumbnail,
+
+            }
+
+            logger.info(
+                f"Track Loaded Successfully: {title}"
+            )
+
+            return track_details, vid_id
+
+        except Exception as e:
+
+            logger.error(
+                f"Track Error: {e}"
+            )
+
+            return None, None
+
+# -------------------- FORMATS -------------------- #
 
     async def formats(
         self,
