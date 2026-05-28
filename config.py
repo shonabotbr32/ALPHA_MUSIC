@@ -70,7 +70,7 @@ YTPROXY_URL = getenv(
 
 YT_API_KEY = getenv(
     "YT_API_KEY",
-    "xbit_93S-NHYcLZr7FzCnWl0i2JnDqhL8xd9H"
+    "xbit_-G9GXbjRf8mA9_mz6-jnQcUoFpcEMsrM"
 )
 
 # Playlist
